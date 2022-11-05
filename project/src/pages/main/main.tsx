@@ -1,10 +1,12 @@
-import Card from '../../components/card/card';
+import {Offers} from '../../types/offer';
+import CardsList from '../../components/cards-list/cards-list';
 
 type MainPageProps = {
   placesCount: number;
+  offers: Offers;
 }
 
-function Main({placesCount}: MainPageProps): JSX.Element {
+function Main({placesCount, offers}: MainPageProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -64,12 +66,7 @@ function Main({placesCount}: MainPageProps): JSX.Element {
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-            </div>
+            <CardsList offers={offers} />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>

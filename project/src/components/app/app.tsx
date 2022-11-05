@@ -4,18 +4,25 @@ import Main from '../../pages/main/main';
 import Property from '../../pages/property/property';
 import Login from '../../pages/login/login';
 import Error from '../../pages/error/error';
+import {Offers} from '../../types/offer';
 
 type AppScreenProps = {
   placesCount: number;
+  offers: Offers;
 }
 
-function App({placesCount}: AppScreenProps): JSX.Element {
+function App({placesCount, offers}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<Main placesCount={placesCount} />}
+          element={
+            <Main
+              placesCount={placesCount}
+              offers={offers}
+            />
+          }
         />
         <Route
           path={AppRoute.Login}
