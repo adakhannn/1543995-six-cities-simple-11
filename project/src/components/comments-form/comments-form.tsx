@@ -6,12 +6,7 @@ function CommentsForm(): JSX.Element {
     rating: 0,
   });
 
-  const ratingChangeHandle = (evt: ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = evt.target;
-    setFormData({...formData, [name]: value});
-  };
-
-  const textChangeHandle = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+  const formChangeHandle = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
   };
@@ -33,7 +28,7 @@ function CommentsForm(): JSX.Element {
           value="4"
           id="4-stars"
           type="radio"
-          onChange={ratingChangeHandle}
+          onChange={formChangeHandle}
         />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width="37" height="33">
@@ -47,7 +42,7 @@ function CommentsForm(): JSX.Element {
           value="3"
           id="3-stars"
           type="radio"
-          onChange={ratingChangeHandle}
+          onChange={formChangeHandle}
         />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
           <svg className="form__star-image" width="37" height="33">
@@ -61,7 +56,7 @@ function CommentsForm(): JSX.Element {
           value="2"
           id="2-stars"
           type="radio"
-          onChange={ratingChangeHandle}
+          onChange={formChangeHandle}
         />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
           <svg className="form__star-image" width="37" height="33">
@@ -75,7 +70,7 @@ function CommentsForm(): JSX.Element {
           value="1"
           id="1-star"
           type="radio"
-          onChange={ratingChangeHandle}
+          onChange={formChangeHandle}
         />
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
           <svg className="form__star-image" width="37" height="33">
@@ -89,7 +84,7 @@ function CommentsForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.review}
-        onChange={textChangeHandle}
+        onChange={formChangeHandle}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -98,7 +93,6 @@ function CommentsForm(): JSX.Element {
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
       </div>
-      <p>{formData.rating}{formData.review}</p>
     </form>
   );
 }
