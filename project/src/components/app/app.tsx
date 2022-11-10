@@ -5,13 +5,16 @@ import Property from '../../pages/property/property';
 import Login from '../../pages/login/login';
 import Error from '../../pages/error/error';
 import {Offers} from '../../types/offer';
+import {Reviews} from '../../types/review';
 
 type AppScreenProps = {
   placesCount: number;
   offers: Offers;
+  reviews: Reviews;
 }
 
-function App({placesCount, offers}: AppScreenProps): JSX.Element {
+function App(props: AppScreenProps): JSX.Element {
+  const {placesCount, offers, reviews} = props;
   return (
     <BrowserRouter>
       <Routes>
@@ -30,7 +33,12 @@ function App({placesCount, offers}: AppScreenProps): JSX.Element {
         />
         <Route
           path={AppRoute.Property}
-          element={<Property />}
+          element={
+            <Property
+              reviews={reviews}
+              offers={offers}
+            />
+          }
         />
         <Route
           path={AppRoute.Error}
