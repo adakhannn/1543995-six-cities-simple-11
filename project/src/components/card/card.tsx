@@ -1,11 +1,13 @@
-import {Offer} from '../../types/offer';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {Offer} from '../../types/offer';
+
 type CardProps = {
   offer: Offer;
 }
 
-function Card({offer}: CardProps): JSX.Element {
+function Card(props: CardProps): JSX.Element {
+  const {offer} = props;
   return (
     <article className="cities__card place-card">
       {offer.isPremium ?
@@ -24,7 +26,6 @@ function Card({offer}: CardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

@@ -5,12 +5,10 @@ function CommentsForm(): JSX.Element {
     review: '',
     rating: 0,
   });
-
   const formChangeHandle = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
   };
-
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -21,7 +19,6 @@ function CommentsForm(): JSX.Element {
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
-
         <input
           className="form__rating-input visually-hidden"
           name="rating"
@@ -35,7 +32,6 @@ function CommentsForm(): JSX.Element {
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
-
         <input
           className="form__rating-input visually-hidden"
           name="rating"
@@ -49,7 +45,6 @@ function CommentsForm(): JSX.Element {
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
-
         <input
           className="form__rating-input visually-hidden"
           name="rating"
@@ -63,7 +58,6 @@ function CommentsForm(): JSX.Element {
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
-
         <input
           className="form__rating-input visually-hidden"
           name="rating"

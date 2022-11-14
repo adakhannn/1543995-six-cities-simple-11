@@ -1,23 +1,40 @@
-import CommentsForm from '../../components/comments-form/comments-form';
-import Header from '../../components/header/header';
-import ReviewList from '../../components/review-list/review-list';
 import {Reviews} from '../../types/review';
 import Map from '../../components/map/map';
-import {Offers} from '../../types/offer';
 import NearCardList from '../../components/near-card-list/near-card-list';
+import CommentsForm from '../../components/comments-form/comments-form';
+import MainLogo from '../../components/header-logo/main-logo';
+import ReviewList from '../../components/review-list/review-list';
 
 type PropertyProps = {
   reviews: Reviews;
-  offers: Offers;
 }
 
 function Property(props:PropertyProps): JSX.Element {
-  const {reviews, offers} = props;
+  const {reviews} = props;
   return (
     <div className="page">
-
-      <Header />
-
+      <header className="header">
+        <div className="container">
+          <div className="header__wrapper">
+            <MainLogo />
+            <nav className="header__nav">
+              <ul className="header__nav-list">
+                <li className="header__nav-item user">
+                  <div className="header__nav-profile">
+                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                  </div>
+                </li>
+                <li className="header__nav-item">
+                  <a className="header__nav-link" href="#">
+                    <span className="header__signout">Sign out</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -141,13 +158,13 @@ function Property(props:PropertyProps): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={offers[0].city} offers={offers}/>
+            <Map />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearCardList offers={offers} />
+            <NearCardList />
           </section>
         </div>
       </main>

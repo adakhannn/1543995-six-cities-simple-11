@@ -1,12 +1,8 @@
-import {Offers} from '../../types/offer';
+import {useAppSelector} from '../../hooks';
 import NearCard from '../near-card/near-card';
 
-type NearCardProps = {
-  offers: Offers;
-}
-
-function NearCardList(props:NearCardProps): JSX.Element {
-  const {offers} = props;
+function NearCardList(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
   return (
     <div className="near-places__list places__list">
       {offers.map((offer) => <NearCard key={offer.id} offer={offer} />)}
