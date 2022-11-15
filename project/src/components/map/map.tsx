@@ -18,6 +18,7 @@ function Map(): JSX.Element {
   const map = useMap(mapRef, city);
   useEffect(() => {
     if (map) {
+      map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom);
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -26,11 +27,6 @@ function Map(): JSX.Element {
 
         marker.setIcon(defaultCustomIcon).addTo(map);
       });
-      map.options.center = {
-        lat: city.location.latitude,
-        lng: city.location.longitude
-      };
-      map.options.zoom = city.location.zoom;
     }
   }, [map, offers]);
   return (
