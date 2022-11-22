@@ -4,6 +4,9 @@ import NearCardList from '../../components/near-card-list/near-card-list';
 import CommentsForm from '../../components/comments-form/comments-form';
 import MainLogo from '../../components/header-logo/main-logo';
 import ReviewList from '../../components/review-list/review-list';
+import {useParams, Navigate} from 'react-router-dom';
+import {useAppSelector} from '../../hooks';
+import {AppRoute} from '../../const';
 
 type PropertyProps = {
   reviews: Reviews;
@@ -11,6 +14,12 @@ type PropertyProps = {
 
 function Property(props:PropertyProps): JSX.Element {
   const {reviews} = props;
+  const offers = useAppSelector((state) => state.offers);
+  const {id: offerId} = useParams();
+  const currentOffer = offers.find((offer) => offer.id.toString() === offerId);
+  if (!currentOffer) {
+    return <Navigate to={AppRoute.Error} />;
+  }
   return (
     <div className="page">
       <header className="header">
@@ -39,91 +48,55 @@ function Property(props:PropertyProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
+              {currentOffer.images.map((image) => (
+                <div className="property__image-wrapper" key={image}>
+                  <img className="property__image" src={image} alt="Photo studio" />
+                </div>
+              ))}
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {currentOffer.isPremium ?
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div>
+                : ''}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {currentOffer.title}
                 </h1>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  <span style={{width: `${(100 / 5) * currentOffer.rating}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{currentOffer.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {currentOffer.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {currentOffer.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {currentOffer.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{currentOffer.maxAdults}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
+                  {currentOffer.goods.map((good) => (
+                    <li className="property__inside-item" key={good}>
+                      {good}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="property__host">

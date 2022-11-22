@@ -1,19 +1,37 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {DEFAULT_CITY} from '../const';
-import {offers} from '../mocks/offers';
-import {changeCity} from './action';
+import {cities} from '../const';
+import {changeCity, getOffers, hoverOffer} from './action';
+import {City, Offer, Offers} from '../types/offer';
 
-const initialState = {
-  city: DEFAULT_CITY,
-  offers: offers.filter((offer) => offer.city.name === DEFAULT_CITY.name)
+type State = {
+  city: City;
+  offers: Offers;
+  filteredOffers: Offers;
+  selectedOffer: null | Offer;
+};
+
+const initialState:State = {
+  city: cities[0],
+  offers: [],
+  filteredOffers: [],
+  selectedOffer: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(getOffers, (state, action) => {
+      const {offers} = action.payload;
+      state.offers = offers;
+      state.filteredOffers = state.offers.filter((offer) => offer.city.name === cities[0].name);
+    })
     .addCase(changeCity, (state, action) => {
       const {city} = action.payload;
       state.city = city;
-      state.offers = offers.filter((offer) => offer.city.name === city.name);
+      state.filteredOffers = state.offers.filter((offer) => offer.city.name === city.name);
+    })
+    .addCase(hoverOffer, (state, action) => {
+      const {offer} = action.payload;
+      state.selectedOffer = offer;
     });
 });
 

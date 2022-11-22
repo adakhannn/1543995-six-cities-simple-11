@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
 import {Offer} from '../../types/offer';
+import {useAppDispatch} from '../../hooks';
+import {hoverOffer} from '../../store/action';
 
 type CardProps = {
   offer: Offer;
@@ -8,8 +9,19 @@ type CardProps = {
 
 function Card(props: CardProps): JSX.Element {
   const {offer} = props;
+  const dispatch = useAppDispatch();
   return (
-    <article className="cities__card place-card">
+    <article
+      className="cities__card place-card"
+      onMouseEnter={(evt) => {
+        evt.preventDefault();
+        dispatch(hoverOffer({offer: offer}));
+      }}
+      onMouseLeave={(evt) => {
+        evt.preventDefault();
+        dispatch(hoverOffer({offer: null}));
+      }}
+    >
       {offer.isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
@@ -34,7 +46,14 @@ function Card(props: CardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Property}`}>{offer.title}</Link>
+          <Link
+            to={`/offer/${offer.id}`}
+            onClick={(evt) => {
+              dispatch(hoverOffer({offer: null}));
+            }}
+          >
+            {offer.title}
+          </Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

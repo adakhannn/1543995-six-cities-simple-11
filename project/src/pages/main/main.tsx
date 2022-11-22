@@ -1,11 +1,19 @@
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import MainLogo from '../../components/header-logo/main-logo';
 import LocationList from '../../components/location-list/location-list';
 import CardsList from '../../components/cards-list/cards-list';
 import Map from '../../components/map/map';
+import {useEffect} from 'react';
+import {getOffers} from '../../store/action';
+import {offers} from '../../mocks/offers';
 
 function Main(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getOffers({offers: offers}));
+  }, []);
+  const filteredOffers = useAppSelector((state) => state.filteredOffers);
+  const city = useAppSelector((state) => state.city);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -41,7 +49,7 @@ function Main(): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{filteredOffers.length} places to stay in {city.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
