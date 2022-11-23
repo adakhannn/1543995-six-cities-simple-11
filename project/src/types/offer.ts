@@ -5,35 +5,35 @@ export type Location = {
 }
 
 export type City = {
-  name: string;
   location: Location;
+  name: string;
 }
 
 export type Cities = City[];
 
 export type Host = {
-  id: number;
-  name: string;
-  isPro: boolean;
   avatarUrl: string;
+  id: number;
+  isPro: boolean;
+  name: string;
 }
 
 export type Offer = {
-  city: City;
-  previewImage: string;
-  images: string[];
-  title: string;
-  isPremium: boolean;
-  rating: number;
-  type: string;
   bedrooms: number;
-  maxAdults: number;
-  price: number;
+  city: City;
+  description: string;
   goods: string[];
   host: Host;
-  description: string;
-  location: Location;
   id: number;
+  images: string[];
+  isPremium: boolean;
+  location: Location;
+  maxAdults: number;
+  previewImage: string;
+  price: number;
+  rating: number;
+  title: string;
+  type: string;
 }
 
 export type Offers = Offer[];

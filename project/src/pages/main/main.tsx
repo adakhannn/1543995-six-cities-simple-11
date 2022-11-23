@@ -1,17 +1,10 @@
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useAppSelector} from '../../hooks';
 import MainLogo from '../../components/header-logo/main-logo';
 import LocationList from '../../components/location-list/location-list';
 import CardsList from '../../components/cards-list/cards-list';
 import Map from '../../components/map/map';
-import {useEffect} from 'react';
-import {getOffers} from '../../store/action';
-import {offers} from '../../mocks/offers';
 
 function Main(): JSX.Element {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(getOffers({offers: offers}));
-  }, []);
   const filteredOffers = useAppSelector((state) => state.filteredOffers);
   const city = useAppSelector((state) => state.city);
   return (

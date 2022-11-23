@@ -62,3 +62,9 @@ export const cities: Cities = [
     }
   },
 ];
+
+export enum APIRoute {
+  Offers = '/hotels',
+}
+
+export const TIMEOUT_SHOW_ERROR = 2000;

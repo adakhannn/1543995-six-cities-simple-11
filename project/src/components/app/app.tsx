@@ -5,12 +5,21 @@ import Main from '../../pages/main/main';
 import Property from '../../pages/property/property';
 import Login from '../../pages/login/login';
 import Error from '../../pages/error/error';
+import {useAppSelector} from '../../hooks';
+import Loading from '../loading/loading';
 
 type AppScreenProps = {
   reviews: Reviews;
 }
 
 function App(props: AppScreenProps): JSX.Element {
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (isOffersDataLoading) {
+    return (
+      <Loading />
+    );
+  }
   const {reviews} = props;
   return (
     <BrowserRouter>
