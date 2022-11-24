@@ -5,9 +5,10 @@ import {reviews} from './mocks/reviews';
 import {store} from './store';
 import App from './components/app/app';
 import ErrorMessage from './components/error-message/error-message';
-import {fetchOffers} from './store/api-actions';
+import {checkAuthAction, fetchOffers} from './store/api-actions';
 
 store.dispatch(fetchOffers());
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

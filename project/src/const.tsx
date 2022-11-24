@@ -65,6 +65,14 @@ export const cities: Cities = [
 
 export enum APIRoute {
   Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;
