@@ -18,9 +18,9 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(): JSX.Element {
-  const offers = useAppSelector((state) => state.filteredOffers);
+  const offers = useAppSelector((state) => state.sortedOffers);
   const city = useAppSelector((state) => state.city);
-  const selectedOffer = useAppSelector((state) => state.selectedOffer);
+  const hoverOffer = useAppSelector((state) => state.hoverOffer);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
   useEffect(() => {
@@ -28,27 +28,29 @@ function Map(): JSX.Element {
 
     if (map) {
       map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom);
-      offers.forEach((offer) => {
-        const marker = new Marker({
-          lat: offer.location.latitude,
-          lng: offer.location.longitude
+      if (offers) {
+        offers.forEach((offer) => {
+          const marker = new Marker({
+            lat: offer.location.latitude,
+            lng: offer.location.longitude
+          });
+          markers.push(marker);
+          marker
+            .setIcon(
+              hoverOffer && offer.id === hoverOffer.id
+                ? currentCustomIcon
+                : defaultCustomIcon
+            )
+            .addTo(map);
         });
-        markers.push(marker);
-        marker
-          .setIcon(
-            selectedOffer && offer.id === selectedOffer.id
-              ? currentCustomIcon
-              : defaultCustomIcon
-          )
-          .addTo(map);
-      });
+      }
     }
     return () => {
       markers.forEach((marker) => {
         marker.remove();
       });
     };
-  }, [map, offers, selectedOffer]);
+  }, [map, offers, hoverOffer]);
   return (
     <div
       style={{height: '100%'}}

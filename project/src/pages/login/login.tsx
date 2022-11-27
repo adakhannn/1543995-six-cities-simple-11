@@ -1,4 +1,4 @@
-import MainLogo from '../../components/header-logo/main-logo';
+import MainLogo from '../../components/main-logo/main-logo';
 import {FormEvent, useRef} from 'react';
 import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
