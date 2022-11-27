@@ -2,11 +2,11 @@ import {Reviews} from '../../types/review';
 import Map from '../../components/map/map';
 import NearCardList from '../../components/near-card-list/near-card-list';
 import CommentsForm from '../../components/comments-form/comments-form';
-import MainLogo from '../../components/header-logo/main-logo';
 import ReviewList from '../../components/review-list/review-list';
 import {useParams, Navigate} from 'react-router-dom';
 import {useAppSelector} from '../../hooks';
 import {AppRoute} from '../../const';
+import Header from '../../components/header/header';
 
 type PropertyProps = {
   reviews: Reviews;
@@ -22,28 +22,7 @@ function Property(props:PropertyProps): JSX.Element {
   }
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <MainLogo />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <div className="header__nav-profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </div>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">

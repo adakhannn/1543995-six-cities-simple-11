@@ -1,4 +1,4 @@
-import MainLogo from '../../components/header-logo/main-logo';
+import MainLogo from '../../components/main-logo/main-logo';
 
 function Error(): JSX.Element {
   return (
