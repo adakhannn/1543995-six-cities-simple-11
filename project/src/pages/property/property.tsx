@@ -7,6 +7,7 @@ import {useParams, Navigate} from 'react-router-dom';
 import {useAppSelector} from '../../hooks';
 import {AppRoute} from '../../const';
 import Header from '../../components/header/header';
+import {getSortedOffers} from '../../store/offers-data/selectors';
 
 type PropertyProps = {
   reviews: Reviews;
@@ -14,7 +15,7 @@ type PropertyProps = {
 
 function Property(props:PropertyProps): JSX.Element {
   const {reviews} = props;
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(getSortedOffers);
   const {id: offerId} = useParams();
   const currentOffer = offers.find((offer) => offer.id.toString() === offerId);
   if (!currentOffer) {
