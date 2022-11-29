@@ -1,11 +1,11 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker} from 'leaflet';
+import {useAppSelector} from '../../hooks';
 import {PinIcon} from '../../const';
 import useMap from '../../hooks/use-map/use-map';
-import {useAppSelector} from '../../hooks';
-import 'leaflet/dist/leaflet.css';
 import {getActiveCity, getSortedOffers} from '../../store/offers-data/selectors';
 import {getHoveredOffer} from '../../store/offers-process/selectors';
+import 'leaflet/dist/leaflet.css';
 
 const defaultCustomIcon = new Icon({
   iconUrl: PinIcon.Default,

@@ -1,9 +1,9 @@
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import MainLogo from '../main-logo/main-logo';
 import {Link} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {logoutAction} from '../../store/api-actions';
 import {getAuthorizationStatus, getUserData} from '../../store/user-process/selectors';
+import MainLogo from '../main-logo/main-logo';
 
 function Header(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);

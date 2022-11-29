@@ -1,9 +1,9 @@
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {sortTypes} from '../../const';
 import {useState} from 'react';
 import classNames from 'classnames';
-import {getActiveSortType} from '../../store/offers-data/selectors';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {sortTypes} from '../../const';
 import {sorting} from '../../store/offers-data/offers-data';
+import {getActiveSortType} from '../../store/offers-data/selectors';
 
 function Sorter(): JSX.Element {
   const dispatch = useAppDispatch();

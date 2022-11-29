@@ -1,13 +1,13 @@
+import {useParams, Navigate} from 'react-router-dom';
+import {useAppSelector} from '../../hooks';
+import {AppRoute} from '../../const';
 import {Reviews} from '../../types/review';
+import {getSortedOffers} from '../../store/offers-data/selectors';
+import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import NearCardList from '../../components/near-card-list/near-card-list';
 import CommentsForm from '../../components/comments-form/comments-form';
 import ReviewList from '../../components/review-list/review-list';
-import {useParams, Navigate} from 'react-router-dom';
-import {useAppSelector} from '../../hooks';
-import {AppRoute} from '../../const';
-import Header from '../../components/header/header';
-import {getSortedOffers} from '../../store/offers-data/selectors';
 
 type PropertyProps = {
   reviews: Reviews;

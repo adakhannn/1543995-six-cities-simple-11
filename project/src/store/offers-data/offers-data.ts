@@ -1,8 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {cities, NameSpace, sortTypes} from '../../const';
 import {OffersData} from '../../types/state';
-import {fetchOffers} from '../api-actions';
 import {City, Offer} from '../../types/offer';
+import {fetchOffers} from '../api-actions';
 
 const initialState: OffersData = {
   isOffersDataLoading: false,

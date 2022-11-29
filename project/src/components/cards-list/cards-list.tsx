@@ -1,6 +1,6 @@
 import {useAppSelector} from '../../hooks';
-import Card from '../../components/card/card';
 import {getSortedOffers} from '../../store/offers-data/selectors';
+import Card from '../../components/card/card';
 
 function CardsList(): JSX.Element {
   const offers = useAppSelector(getSortedOffers);

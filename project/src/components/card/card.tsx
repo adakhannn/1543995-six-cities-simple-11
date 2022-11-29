@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
-import {Offer} from '../../types/offer';
 import {useAppDispatch} from '../../hooks';
+import {Offer} from '../../types/offer';
 import {hoveringOffer} from '../../store/offers-process/offers-process';
 
 type CardProps = {

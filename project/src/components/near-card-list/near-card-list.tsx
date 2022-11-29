@@ -1,6 +1,6 @@
 import {useAppSelector} from '../../hooks';
-import NearCard from '../near-card/near-card';
 import {getSortedOffers} from '../../store/offers-data/selectors';
+import NearCard from '../near-card/near-card';
 
 function NearCardList(): JSX.Element {
   const offers = useAppSelector(getSortedOffers);

@@ -1,16 +1,16 @@
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 import {Route, Routes} from 'react-router-dom';
+import {useAppSelector} from '../../hooks';
 import {AppRoute} from '../../const';
 import {Reviews} from '../../types/review';
+import {getAuthCheckedStatus} from '../../store/user-process/selectors';
+import {getOffersDataLoadingStatus} from '../../store/offers-data/selectors';
 import Main from '../../pages/main/main';
 import Property from '../../pages/property/property';
 import Login from '../../pages/login/login';
 import Error from '../../pages/error/error';
-import {useAppSelector} from '../../hooks';
 import Loading from '../loading/loading';
-import HistoryRouter from '../history-route/history-route';
-import browserHistory from '../../browser-history';
-import {getAuthCheckedStatus} from '../../store/user-process/selectors';
-import {getOffersDataLoadingStatus} from '../../store/offers-data/selectors';
 
 type AppScreenProps = {
   reviews: Reviews;
@@ -25,6 +25,7 @@ function App(props: AppScreenProps): JSX.Element {
       <Loading />
     );
   }
+
   const {reviews} = props;
   return (
     <HistoryRouter history={browserHistory}>

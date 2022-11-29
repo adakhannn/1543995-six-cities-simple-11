@@ -1,6 +1,6 @@
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import classNames from 'classnames';
 import {City} from '../../types/offer';
-import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getActiveCity} from '../../store/offers-data/selectors';
 import {filtering} from '../../store/offers-data/offers-data';
 

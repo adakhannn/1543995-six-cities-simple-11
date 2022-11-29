@@ -1,14 +1,11 @@
-import {useAppSelector} from '../../hooks';
 import LocationList from '../../components/location-list/location-list';
 import CardsList from '../../components/cards-list/cards-list';
 import Map from '../../components/map/map';
 import Header from '../../components/header/header';
-import {getActiveCity, getSortedOffers} from '../../store/offers-data/selectors';
 import Sorter from '../../components/sorter/sorter';
+import Title from '../../components/title/title';
 
 function Main(): JSX.Element {
-  const offers = useAppSelector(getSortedOffers);
-  const activeCity = useAppSelector(getActiveCity);
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -23,7 +20,7 @@ function Main(): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers ? offers.length : ''} places to stay in {activeCity.name}</b>
+              <Title />
               <Sorter />
               <CardsList />
             </section>
