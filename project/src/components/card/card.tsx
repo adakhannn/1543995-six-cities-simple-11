@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
-import {Offer} from '../../types/offer';
 import {useAppDispatch} from '../../hooks';
-import {hoverOffer} from '../../store/action';
+import {Offer} from '../../types/offer';
+import {hoveringOffer} from '../../store/offers-process/offers-process';
 
 type CardProps = {
   offer: Offer;
@@ -15,11 +15,11 @@ function Card(props: CardProps): JSX.Element {
       className="cities__card place-card"
       onMouseEnter={(evt) => {
         evt.preventDefault();
-        dispatch(hoverOffer({offer: offer}));
+        dispatch(hoveringOffer({hoveredOffer: offer}));
       }}
       onMouseLeave={(evt) => {
         evt.preventDefault();
-        dispatch(hoverOffer({offer: null}));
+        dispatch(hoveringOffer({hoveredOffer: null}));
       }}
     >
       {offer.isPremium ?
@@ -49,7 +49,7 @@ function Card(props: CardProps): JSX.Element {
           <Link
             to={`/offer/${offer.id}`}
             onClick={(evt) => {
-              dispatch(hoverOffer({offer: null}));
+              dispatch(hoveringOffer({hoveredOffer: null}));
             }}
           >
             {offer.title}

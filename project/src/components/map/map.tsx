@@ -1,8 +1,10 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker} from 'leaflet';
+import {useAppSelector} from '../../hooks';
 import {PinIcon} from '../../const';
 import useMap from '../../hooks/use-map/use-map';
-import {useAppSelector} from '../../hooks';
+import {getActiveCity, getSortedOffers} from '../../store/offers-data/selectors';
+import {getHoveredOffer} from '../../store/offers-process/selectors';
 import 'leaflet/dist/leaflet.css';
 
 const defaultCustomIcon = new Icon({
@@ -18,9 +20,9 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(): JSX.Element {
-  const offers = useAppSelector((state) => state.sortedOffers);
-  const city = useAppSelector((state) => state.city);
-  const hoverOffer = useAppSelector((state) => state.hoverOffer);
+  const offers = useAppSelector(getSortedOffers);
+  const city = useAppSelector(getActiveCity);
+  const hoveredOffer = useAppSelector(getHoveredOffer);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
   useEffect(() => {
@@ -37,7 +39,7 @@ function Map(): JSX.Element {
           markers.push(marker);
           marker
             .setIcon(
-              hoverOffer && offer.id === hoverOffer.id
+              hoveredOffer && offer.id === hoveredOffer.id
                 ? currentCustomIcon
                 : defaultCustomIcon
             )
@@ -50,7 +52,7 @@ function Map(): JSX.Element {
         marker.remove();
       });
     };
-  }, [map, offers, hoverOffer]);
+  }, [map, offers, hoveredOffer]);
   return (
     <div
       style={{height: '100%'}}

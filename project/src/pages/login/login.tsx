@@ -1,8 +1,8 @@
-import MainLogo from '../../components/main-logo/main-logo';
 import {FormEvent, useRef} from 'react';
 import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
+import MainLogo from '../../components/main-logo/main-logo';
 
 function Login(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);

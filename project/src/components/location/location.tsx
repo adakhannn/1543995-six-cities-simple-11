@@ -1,14 +1,15 @@
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import classNames from 'classnames';
 import {City} from '../../types/offer';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeCity} from '../../store/action';
+import {getActiveCity} from '../../store/offers-data/selectors';
+import {filtering} from '../../store/offers-data/offers-data';
 
 type locationProps = {
   city: City;
 }
 
 function Location({city}: locationProps): JSX.Element {
-  const location = useAppSelector((state) => state.city);
+  const location = useAppSelector(getActiveCity);
   const dispatch = useAppDispatch();
   return (
     <li className="locations__item">
@@ -17,7 +18,7 @@ function Location({city}: locationProps): JSX.Element {
         href="#"
         onClick={(evt) => {
           evt.preventDefault();
-          dispatch(changeCity({city: city}));
+          dispatch(filtering({activeCity: city}));
         }}
       >
         <span>{city.name}</span>
