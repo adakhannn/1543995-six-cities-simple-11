@@ -1,12 +1,23 @@
-import {useAppSelector} from '../../hooks';
-import {getSortedOffers} from '../../store/offers-data/selectors';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useEffect} from 'react';
+import {fetchNearbyOffers} from '../../store/api-actions';
+import {getNearbyOffers} from '../../store/offers-data/selectors';
 import NearCard from '../near-card/near-card';
 
-function NearCardList(): JSX.Element {
-  const offers = useAppSelector(getSortedOffers);
+type NearbyCardsList = {
+  id: string | undefined;
+}
+
+function NearCardList(props: NearbyCardsList): JSX.Element {
+  const dispatch = useAppDispatch();
+  const {id} = props;
+  const nearbyOffers = useAppSelector(getNearbyOffers);
+  useEffect(() => {
+    dispatch(fetchNearbyOffers(Number(id)));
+  }, []);
   return (
     <div className="near-places__list places__list">
-      {offers.map((offer) => <NearCard key={offer.id} offer={offer} />)}
+      {nearbyOffers.map((offer) => <NearCard key={offer.id} offer={offer} />)}
     </div>
   );
 }

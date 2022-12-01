@@ -1,23 +1,24 @@
 import {useParams, Navigate} from 'react-router-dom';
-import {useAppSelector} from '../../hooks';
-import {AppRoute} from '../../const';
-import {Reviews} from '../../types/review';
-import {getSortedOffers} from '../../store/offers-data/selectors';
+import {useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {AppRoute, AuthorizationStatus} from '../../const';
+import {fetchOffer} from '../../store/api-actions';
+import {getActiveOffer} from '../../store/offers-data/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import Header from '../../components/header/header';
-import Map from '../../components/map/map';
 import NearCardList from '../../components/near-card-list/near-card-list';
 import CommentsForm from '../../components/comments-form/comments-form';
-import ReviewList from '../../components/review-list/review-list';
+import Reviews from '../../components/reviews/reviews';
+import NearbyMap from '../../components/nearby-map/nearby-map';
 
-type PropertyProps = {
-  reviews: Reviews;
-}
-
-function Property(props:PropertyProps): JSX.Element {
-  const {reviews} = props;
-  const offers = useAppSelector(getSortedOffers);
+function Property(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const {id: offerId} = useParams();
-  const currentOffer = offers.find((offer) => offer.id.toString() === offerId);
+  useEffect(() => {
+    dispatch(fetchOffer(Number(offerId)));
+  }, []);
+  const currentOffer = useAppSelector(getActiveOffer);
   if (!currentOffer) {
     return <Navigate to={AppRoute.Error} />;
   }
@@ -104,20 +105,19 @@ function Property(props:PropertyProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewList reviews={reviews}/>
-                <CommentsForm />
+                <Reviews id={offerId}/>
+                {authorizationStatus === AuthorizationStatus.Auth ? <CommentsForm id={offerId}/> : ''}
               </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map />
+            <NearbyMap />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearCardList />
+            <NearCardList id={offerId}/>
           </section>
         </div>
       </main>

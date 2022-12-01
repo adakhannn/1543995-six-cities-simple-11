@@ -2,6 +2,7 @@ import {store} from '../store';
 import {AuthorizationStatus} from '../const';
 import {UserData} from './user-data';
 import {City, Offer, Offers} from './offer';
+import {Reviews} from './review';
 
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
@@ -15,6 +16,12 @@ export type OffersData = {
   offers: Offers;
   filteredOffers: Offers;
   sortedOffers: Offers;
+  nearbyOffers: Offers;
+  activeOffer: Offer | null;
+};
+
+export type ReviewsData = {
+  reviews: Reviews;
 };
 
 export type OffersProcess = {

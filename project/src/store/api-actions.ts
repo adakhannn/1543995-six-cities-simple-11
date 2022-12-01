@@ -3,10 +3,12 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 import {redirectToRoute} from './action';
 import {APIRoute, AppRoute} from '../const';
-import {Offers} from '../types/offer';
+import {Offer, Offers} from '../types/offer';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {dropToken, saveToken} from '../services/token';
+import {Reviews} from '../types/review';
+import {ReviewData} from '../types/review-data';
 
 export const fetchOffers = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -16,6 +18,54 @@ export const fetchOffers = createAsyncThunk<Offers, undefined, {
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<Offers>(APIRoute.Offers);
+    return data;
+  },
+);
+
+export const fetchOffer = createAsyncThunk<Offer, Offer['id'], {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchOffer',
+  async (offerId: number, {dispatch, extra: api}) => {
+    const {data} = await api.get<Offer>(`${APIRoute.Offers}/${offerId}`);
+    return data;
+  },
+);
+
+export const fetchNearbyOffers = createAsyncThunk<Offers, Offer['id'], {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchNearbyOffers',
+  async (offerId: number, {dispatch, extra: api}) => {
+    const {data} = await api.get<Offers>(`${APIRoute.Offers}/${offerId}/nearby`);
+    return data;
+  },
+);
+
+export const fetchReviews = createAsyncThunk<Reviews, Offer['id'], {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'reviews/fetchReviews',
+  async (offerId: number, {dispatch, extra: api}) => {
+    const {data} = await api.get<Reviews>(`${APIRoute.Comments}/${offerId}`);
+    return data;
+  },
+);
+
+export const sendReview = createAsyncThunk<Reviews, ReviewData, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'reviews/sendReview',
+  async ({offerId, comment, rating}, {dispatch, extra: api}) => {
+    const {data} = await api.post<Reviews>(`${APIRoute.Comments}/${offerId}`, {comment, rating});
     return data;
   },
 );

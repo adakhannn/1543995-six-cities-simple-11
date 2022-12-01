@@ -1,16 +1,16 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import classNames from 'classnames';
 import {City} from '../../types/offer';
-import {getActiveCity} from '../../store/offers-data/selectors';
 import {filtering} from '../../store/offers-data/offers-data';
+import {getActiveCity} from '../../store/offers-data/selectors';
 
 type locationProps = {
   city: City;
 }
 
 function Location({city}: locationProps): JSX.Element {
-  const location = useAppSelector(getActiveCity);
   const dispatch = useAppDispatch();
+  const location = useAppSelector(getActiveCity);
   return (
     <li className="locations__item">
       <a

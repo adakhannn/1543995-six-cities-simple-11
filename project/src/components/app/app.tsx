@@ -3,7 +3,8 @@ import browserHistory from '../../browser-history';
 import {Route, Routes} from 'react-router-dom';
 import {useAppSelector} from '../../hooks';
 import {AppRoute} from '../../const';
-import {Reviews} from '../../types/review';
+import {store} from '../../store';
+import {checkAuthAction, fetchOffers} from '../../store/api-actions';
 import {getAuthCheckedStatus} from '../../store/user-process/selectors';
 import {getOffersDataLoadingStatus} from '../../store/offers-data/selectors';
 import Main from '../../pages/main/main';
@@ -12,21 +13,17 @@ import Login from '../../pages/login/login';
 import Error from '../../pages/error/error';
 import Loading from '../loading/loading';
 
-type AppScreenProps = {
-  reviews: Reviews;
-}
+store.dispatch(fetchOffers());
+store.dispatch(checkAuthAction());
 
-function App(props: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
-
   if (!isAuthChecked || isOffersDataLoading) {
     return (
       <Loading />
     );
   }
-
-  const {reviews} = props;
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
@@ -41,7 +38,7 @@ function App(props: AppScreenProps): JSX.Element {
         <Route
           path={AppRoute.Property}
           element={
-            <Property reviews={reviews}/>
+            <Property />
           }
         />
         <Route
