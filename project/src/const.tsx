@@ -74,6 +74,7 @@ export enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments'
 }
 
 export enum AuthorizationStatus {
@@ -86,4 +87,5 @@ export enum NameSpace {
   Data = 'DATA',
   User = 'USER',
   Offers = 'OFFERS',
+  Reviews = 'REVIEWS',
 }

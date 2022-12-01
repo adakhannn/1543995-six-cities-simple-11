@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {cities, NameSpace, sortTypes} from '../../const';
 import {OffersData} from '../../types/state';
 import {City, Offer} from '../../types/offer';
-import {fetchOffers} from '../api-actions';
+import {fetchNearbyOffers, fetchOffer, fetchOffers} from '../api-actions';
 
 const initialState: OffersData = {
   isOffersDataLoading: false,
@@ -11,6 +11,8 @@ const initialState: OffersData = {
   offers: [],
   filteredOffers: [],
   sortedOffers: [],
+  nearbyOffers: [],
+  activeOffer: null,
 };
 
 export const offersData = createSlice({
@@ -70,6 +72,12 @@ export const offersData = createSlice({
         state.filteredOffers = state.offers.filter((offer) => offer.city.name === state.activeCity.name);
         state.sortedOffers = state.filteredOffers;
         state.isOffersDataLoading = false;
+      })
+      .addCase(fetchOffer.fulfilled, (state, action) => {
+        state.activeOffer = action.payload;
+      })
+      .addCase(fetchNearbyOffers.fulfilled, (state, action) => {
+        state.nearbyOffers = action.payload;
       });
   }
 });

@@ -6,9 +6,9 @@ import {getAuthorizationStatus, getUserData} from '../../store/user-process/sele
 import MainLogo from '../main-logo/main-logo';
 
 function Header(): JSX.Element {
+  const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const userInfo = useAppSelector(getUserData);
-  const dispatch = useAppDispatch();
   return (
     <header className="header">
       <div className="container">

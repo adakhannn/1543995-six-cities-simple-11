@@ -1,16 +1,13 @@
 import {FormEvent, useRef} from 'react';
 import {useAppDispatch} from '../../hooks';
-import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
+import {loginAction} from '../../store/api-actions';
 import MainLogo from '../../components/main-logo/main-logo';
 
 function Login(): JSX.Element {
+  const dispatch = useAppDispatch();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const dispatch = useAppDispatch();
-  const onSubmit = (authData: AuthData) => {
-    dispatch(loginAction(authData));
-  };
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -20,6 +17,9 @@ function Login(): JSX.Element {
         password: passwordRef.current.value,
       });
     }
+  };
+  const onSubmit = (authData: AuthData) => {
+    dispatch(loginAction(authData));
   };
   return (
     <div className="page page--gray page--login">
