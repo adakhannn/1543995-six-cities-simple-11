@@ -73,6 +73,9 @@ export const offersData = createSlice({
         state.sortedOffers = state.filteredOffers;
         state.isOffersDataLoading = false;
       })
+      .addCase(fetchOffers.rejected, (state, action) => {
+        state.isOffersDataLoading = false;
+      })
       .addCase(fetchOffer.fulfilled, (state, action) => {
         state.activeOffer = action.payload;
       })
