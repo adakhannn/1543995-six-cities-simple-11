@@ -1,11 +1,11 @@
 import {Review} from '../../types/review';
 import dayjs from 'dayjs';
 
-type ReviewProps = {
+type ReviewItemProps = {
   review: Review;
 }
 
-function ReviewItem(props:ReviewProps): JSX.Element {
+function ReviewItem(props:ReviewItemProps): JSX.Element {
   const review = props.review;
   return (
     <li className="reviews__item">

@@ -3,7 +3,7 @@ import {checkAuthAction} from '../../store/api-actions';
 import {useAppSelector} from '../../hooks';
 import {store} from '../../store';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRoute from '../history-route/history-route';
 import {Route, Routes} from 'react-router-dom';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import Main from '../../pages/main/main';
@@ -16,7 +16,7 @@ store.dispatch(checkAuthAction());
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   return (
-    <HistoryRouter history={browserHistory}>
+    <HistoryRoute history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Root}
@@ -37,7 +37,7 @@ function App(): JSX.Element {
           element={<Error />}
         />
       </Routes>
-    </HistoryRouter>
+    </HistoryRoute>
   );
 }
 
