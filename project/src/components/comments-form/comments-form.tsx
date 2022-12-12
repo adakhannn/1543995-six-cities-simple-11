@@ -1,15 +1,12 @@
 import {sendReview} from '../../store/api-actions';
 import {ChangeEvent, FormEvent, useState} from 'react';
 import {ReviewData} from '../../types/review-data';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {getActiveOffer} from '../../store/offers-data/selectors';
 
-type CommentsProp = {
-  id: string | undefined;
-}
-
-function CommentsForm(props: CommentsProp): JSX.Element {
+function CommentsForm(): JSX.Element {
   const dispatch = useAppDispatch();
-  const {id} = props;
+  const currentOffer = useAppSelector(getActiveOffer);
   const [formData, setFormData] = useState({
     review: '',
     rating: 0,
@@ -21,9 +18,9 @@ function CommentsForm(props: CommentsProp): JSX.Element {
   };
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (validationStatus) {
+    if (validationStatus && currentOffer) {
       onSubmit({
-        offerId: Number(id),
+        offerId: Number(currentOffer.id),
         rating: formData.rating,
         comment: formData.review
       });

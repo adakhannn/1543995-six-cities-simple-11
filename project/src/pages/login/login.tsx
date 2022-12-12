@@ -78,7 +78,13 @@ function Login(): JSX.Element {
                 />
               </div>
               {!validationStatus ? <p>Password must contain at least one number and one letter!</p> : ''}
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button
+                className="login__submit form__submit button"
+                type="submit"
+                disabled={!validationStatus}
+              >
+                Sign in
+              </button>
             </form>
           </section>
           <section className="locations locations--login locations--current">

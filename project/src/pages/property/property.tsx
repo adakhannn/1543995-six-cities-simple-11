@@ -1,4 +1,4 @@
-import {fetchOffer} from '../../store/api-actions';
+import {fetchNearbyOffers, fetchOffer, fetchReviews} from '../../store/api-actions';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
@@ -19,6 +19,8 @@ function Property(): JSX.Element {
   const {id: offerId} = useParams();
   useEffect(() => {
     dispatch(fetchOffer(Number(offerId)));
+    dispatch(fetchNearbyOffers(Number(offerId)));
+    dispatch(fetchReviews(Number(offerId)));
   }, []);
   const currentOffer = useAppSelector(getActiveOffer);
   const isError = useAppSelector(getErrorStatus);
@@ -114,8 +116,8 @@ function Property(): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <Reviews id={offerId}/>
-                {authorizationStatus === AuthorizationStatus.Auth ? <CommentsForm id={offerId}/> : ''}
+                <Reviews />
+                {authorizationStatus === AuthorizationStatus.Auth ? <CommentsForm /> : ''}
               </section>
             </div>
           </div>
@@ -126,7 +128,7 @@ function Property(): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearCardList id={offerId}/>
+            <NearCardList />
           </section>
         </div>
       </main>
