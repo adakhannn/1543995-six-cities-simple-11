@@ -55,7 +55,7 @@ function Card(props: CardProps): JSX.Element {
             {offer.title}
           </Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{offer.type === 'room' ? 'Private Room' : offer.type[0].toUpperCase() + offer.type.slice(1)}</p>
       </div>
     </article>
   );

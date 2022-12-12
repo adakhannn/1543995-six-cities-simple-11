@@ -14,7 +14,7 @@ function CommentsForm(props: CommentsProp): JSX.Element {
     review: '',
     rating: 0,
   });
-  const validationStatus = formData.rating > 0 && formData.review.length > 50 && formData.review.length < 300;
+  const validationStatus = formData.rating > 0 && formData.review.length > 50 && formData.review.length < 300 ;
   const handleChange = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});

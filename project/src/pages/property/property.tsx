@@ -1,8 +1,8 @@
 import {fetchOffer} from '../../store/api-actions';
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {useParams, Navigate} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
-import {getActiveOffer, getOfferDataLoadingStatus} from '../../store/offers-data/selectors';
+import {getActiveOffer, getErrorStatus, getOfferDataLoadingStatus} from '../../store/offers-data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import Header from '../../components/header/header';
 import NearCardList from '../../components/near-card-list/near-card-list';
@@ -10,7 +10,8 @@ import CommentsForm from '../../components/comments-form/comments-form';
 import Reviews from '../../components/reviews/reviews';
 import NearbyMap from '../../components/nearby-map/nearby-map';
 import Loading from '../../components/loading/loading';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AuthorizationStatus} from '../../const';
+import Error from '../error/error';
 
 function Property(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -20,14 +21,15 @@ function Property(): JSX.Element {
     dispatch(fetchOffer(Number(offerId)));
   }, []);
   const currentOffer = useAppSelector(getActiveOffer);
+  const isError = useAppSelector(getErrorStatus);
   const isOfferDataLoading = useAppSelector(getOfferDataLoadingStatus);
   if (isOfferDataLoading) {
     return (
       <Loading />
     );
   }
-  if (!currentOffer) {
-    return <Navigate to={AppRoute.Error} />;
+  if (isError && !isOfferDataLoading || !currentOffer) {
+    return <Error />;
   }
   return (
     <div className="page">
@@ -64,13 +66,13 @@ function Property(): JSX.Element {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {currentOffer.type}
+                  {currentOffer.type === 'room' ? 'Private Room' : currentOffer.type[0].toUpperCase() + currentOffer.type.slice(1)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {currentOffer.bedrooms} Bedrooms
+                  {currentOffer.bedrooms} Bedroom{currentOffer.bedrooms > 1 ? 's' : ''}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {currentOffer.maxAdults} adults
+                  Max {currentOffer.maxAdults} Adult{currentOffer.maxAdults > 1 ? 's' : ''}
                 </li>
               </ul>
               <div className="property__price">

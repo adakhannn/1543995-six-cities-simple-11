@@ -3,7 +3,7 @@ import {useAppSelector, useAppDispatch} from '../../hooks';
 import MainLogo from '../../components/main-logo/main-logo';
 import {getActiveCity} from '../../store/offers-data/selectors';
 import {redirectToRoute} from '../../store/action';
-import {useRef, FormEvent} from 'react';
+import {useRef, FormEvent, ChangeEvent, useState} from 'react';
 import {AppRoute} from '../../const';
 import {AuthData} from '../../types/auth-data';
 
@@ -12,6 +12,7 @@ function Login(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const location = useAppSelector(getActiveCity);
+  const [validationStatus, setValidationStatus] = useState(false);
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (loginRef.current !== null && passwordRef.current !== null) {
@@ -21,8 +22,18 @@ function Login(): JSX.Element {
       });
     }
   };
+  const handleInputPassword = (evt: ChangeEvent<HTMLInputElement>) => {
+    const {value} = evt.target;
+    if (/[0-9]/.test(value) && /[a-z]/.test(value)) {
+      setValidationStatus(true);
+    } else {
+      setValidationStatus(false);
+    }
+  };
   const onSubmit = (authData: AuthData) => {
-    dispatch(loginAction(authData));
+    if (validationStatus) {
+      dispatch(loginAction(authData));
+    }
   };
   return (
     <div className="page page--gray page--login">
@@ -63,8 +74,10 @@ function Login(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
+                  onInput={handleInputPassword}
                 />
               </div>
+              {!validationStatus ? <p>Password must contain at least one number and one letter!</p> : ''}
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
           </section>

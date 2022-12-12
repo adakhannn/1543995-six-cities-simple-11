@@ -10,9 +10,9 @@ function NearCard(props:NearCardProps): JSX.Element {
   return (
     <article className="near-places__card place-card">
       <div className="near-places__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <div>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt={offer.title} />
-        </a>
+        </div>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -30,7 +30,7 @@ function NearCard(props:NearCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{offer.type === 'room' ? 'Private Room' : offer.type[0].toUpperCase() + offer.type.slice(1)}</p>
       </div>
     </article>
   );

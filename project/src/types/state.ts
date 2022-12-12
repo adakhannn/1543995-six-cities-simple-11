@@ -12,6 +12,7 @@ export type UserProcess = {
 export type OffersData = {
   isOffersDataLoading: boolean;
   isOfferDataLoading: boolean;
+  isError: boolean;
   activeCity: City;
   activeSortType: string;
   offers: Offers;

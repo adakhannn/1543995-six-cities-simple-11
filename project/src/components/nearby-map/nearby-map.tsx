@@ -9,6 +9,7 @@ import 'leaflet/dist/leaflet.css';
 function NearbyMap(): JSX.Element {
   const currentOffer = useAppSelector(getActiveOffer);
   const offers = useAppSelector(getNearbyOffers);
+  const offersAdd = [...offers, currentOffer];
   const city = useAppSelector(getActiveCity);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -16,20 +17,22 @@ function NearbyMap(): JSX.Element {
     const markers:Marker[] = [];
     if (map) {
       map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom);
-      if (offers) {
-        offers.forEach((offer) => {
-          const marker = new Marker({
-            lat: offer.location.latitude,
-            lng: offer.location.longitude
-          });
-          markers.push(marker);
-          marker
-            .setIcon(
-              currentOffer && offer.id === currentOffer.id
-                ? currentCustomIcon
-                : defaultCustomIcon
-            )
-            .addTo(map);
+      if (offersAdd) {
+        offersAdd.forEach((offer) => {
+          if (offer) {
+            const marker = new Marker({
+              lat: offer.location.latitude,
+              lng: offer.location.longitude
+            });
+            markers.push(marker);
+            marker
+              .setIcon(
+                currentOffer && offer.id === currentOffer.id
+                  ? currentCustomIcon
+                  : defaultCustomIcon
+              )
+              .addTo(map);
+          }
         });
       }
     }
@@ -38,10 +41,10 @@ function NearbyMap(): JSX.Element {
         marker.remove();
       });
     };
-  }, [map, offers]);
+  }, [map, offersAdd]);
   return (
     <div
-      style={{width: '1144px', height: '580px', margin: '0 auto'}}
+      style={{width: '100%', height: '580px', margin: '0 auto'}}
       ref={mapRef}
     >
     </div>
