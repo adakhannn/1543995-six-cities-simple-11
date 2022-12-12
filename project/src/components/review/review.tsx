@@ -1,4 +1,6 @@
 import {Review} from '../../types/review';
+import dayjs from 'dayjs';
+
 type ReviewProps = {
   review: Review;
 }
@@ -25,7 +27,7 @@ function ReviewItem(props:ReviewProps): JSX.Element {
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime={review.date}>{review.date}</time>
+        <time className="reviews__time" dateTime={review.date}>{dayjs(review.date).format('MMMM YYYY')}</time>
       </div>
     </li>
   );

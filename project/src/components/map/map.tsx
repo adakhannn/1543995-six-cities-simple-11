@@ -1,23 +1,11 @@
-import {useRef, useEffect} from 'react';
-import {Icon, Marker} from 'leaflet';
 import {useAppSelector} from '../../hooks';
-import {PinIcon} from '../../const';
+import {currentCustomIcon, defaultCustomIcon} from '../../const';
+import {Marker} from 'leaflet';
+import {useRef, useEffect} from 'react';
 import useMap from '../../hooks/use-map/use-map';
 import {getActiveCity, getSortedOffers} from '../../store/offers-data/selectors';
 import {getHoveredOffer} from '../../store/offers-process/selectors';
 import 'leaflet/dist/leaflet.css';
-
-const defaultCustomIcon = new Icon({
-  iconUrl: PinIcon.Default,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
-
-const currentCustomIcon = new Icon({
-  iconUrl: PinIcon.Active,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
 
 function Map(): JSX.Element {
   const offers = useAppSelector(getSortedOffers);
@@ -27,7 +15,6 @@ function Map(): JSX.Element {
   const map = useMap(mapRef, city);
   useEffect(() => {
     const markers:Marker[] = [];
-
     if (map) {
       map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom);
       if (offers) {

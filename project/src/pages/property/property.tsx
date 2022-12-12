@@ -1,15 +1,16 @@
+import {fetchOffer} from '../../store/api-actions';
+import {useAppSelector, useAppDispatch} from '../../hooks';
 import {useParams, Navigate} from 'react-router-dom';
 import {useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {AppRoute, AuthorizationStatus} from '../../const';
-import {fetchOffer} from '../../store/api-actions';
-import {getActiveOffer} from '../../store/offers-data/selectors';
+import {getActiveOffer, getOfferDataLoadingStatus} from '../../store/offers-data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import Header from '../../components/header/header';
 import NearCardList from '../../components/near-card-list/near-card-list';
 import CommentsForm from '../../components/comments-form/comments-form';
 import Reviews from '../../components/reviews/reviews';
 import NearbyMap from '../../components/nearby-map/nearby-map';
+import Loading from '../../components/loading/loading';
+import {AppRoute, AuthorizationStatus} from '../../const';
 
 function Property(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -19,6 +20,12 @@ function Property(): JSX.Element {
     dispatch(fetchOffer(Number(offerId)));
   }, []);
   const currentOffer = useAppSelector(getActiveOffer);
+  const isOfferDataLoading = useAppSelector(getOfferDataLoadingStatus);
+  if (isOfferDataLoading) {
+    return (
+      <Loading />
+    );
+  }
   if (!currentOffer) {
     return <Navigate to={AppRoute.Error} />;
   }
@@ -29,7 +36,7 @@ function Property(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {currentOffer.images.map((image) => (
+              {currentOffer.images.slice(0, 6).map((image) => (
                 <div className="property__image-wrapper" key={image}>
                   <img className="property__image" src={image} alt="Photo studio" />
                 </div>

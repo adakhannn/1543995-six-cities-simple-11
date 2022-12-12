@@ -1,6 +1,6 @@
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {useEffect} from 'react';
 import {fetchNearbyOffers} from '../../store/api-actions';
+import {useAppSelector, useAppDispatch} from '../../hooks';
+import {useEffect} from 'react';
 import {getNearbyOffers} from '../../store/offers-data/selectors';
 import NearCard from '../near-card/near-card';
 

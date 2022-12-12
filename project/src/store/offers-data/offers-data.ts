@@ -6,6 +6,7 @@ import {fetchNearbyOffers, fetchOffer, fetchOffers} from '../api-actions';
 
 const initialState: OffersData = {
   isOffersDataLoading: false,
+  isOfferDataLoading: true,
   activeCity: cities[0],
   activeSortType: sortTypes[0],
   offers: [],
@@ -76,11 +77,18 @@ export const offersData = createSlice({
       .addCase(fetchOffers.rejected, (state, action) => {
         state.isOffersDataLoading = false;
       })
+      .addCase(fetchOffer.pending, (state) => {
+        state.isOfferDataLoading = true;
+      })
       .addCase(fetchOffer.fulfilled, (state, action) => {
         state.activeOffer = action.payload;
+        state.isOfferDataLoading = false;
       })
       .addCase(fetchNearbyOffers.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
+        if (state.activeOffer) {
+          state.nearbyOffers.push(state.activeOffer);
+        }
       });
   }
 });

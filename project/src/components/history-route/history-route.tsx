@@ -1,5 +1,5 @@
-import {useState, useLayoutEffect, ReactNode} from 'react';
 import {Router} from 'react-router-dom';
+import {useState, useLayoutEffect, ReactNode} from 'react';
 import type {BrowserHistory} from 'history';
 
 export interface HistoryRouterProps {
@@ -17,9 +17,7 @@ function HistoryRouter({
     action: history.action,
     location: history.location,
   });
-
   useLayoutEffect(() => history.listen(setState), [history]);
-
   return (
     <Router
       basename={basename}
