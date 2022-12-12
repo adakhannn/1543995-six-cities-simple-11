@@ -1,12 +1,12 @@
-import {AxiosInstance} from 'axios';
+import {dropToken, saveToken} from '../services/token';
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AppDispatch, State} from '../types/state.js';
 import {redirectToRoute} from './action';
+import {AxiosInstance} from 'axios';
+import {AppDispatch, State} from '../types/state.js';
 import {APIRoute, AppRoute} from '../const';
 import {Offer, Offers} from '../types/offer';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
-import {dropToken, saveToken} from '../services/token';
 import {Reviews} from '../types/review';
 import {ReviewData} from '../types/review-data';
 

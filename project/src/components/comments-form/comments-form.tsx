@@ -1,7 +1,7 @@
-import {ChangeEvent, FormEvent, useState} from 'react';
-import {useAppDispatch} from '../../hooks';
-import {ReviewData} from '../../types/review-data';
 import {sendReview} from '../../store/api-actions';
+import {ChangeEvent, FormEvent, useState} from 'react';
+import {ReviewData} from '../../types/review-data';
+import {useAppDispatch} from '../../hooks';
 
 type CommentsProp = {
   id: string | undefined;
@@ -14,7 +14,7 @@ function CommentsForm(props: CommentsProp): JSX.Element {
     review: '',
     rating: 0,
   });
-  const validationStatus = formData.rating > 0 && formData.review !== '';
+  const validationStatus = formData.rating > 0 && formData.review.length > 50 && formData.review.length < 300;
   const handleChange = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});

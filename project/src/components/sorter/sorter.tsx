@@ -1,7 +1,7 @@
+import {sortTypes} from '../../const';
+import {useAppSelector, useAppDispatch} from '../../hooks';
 import {useState} from 'react';
 import classNames from 'classnames';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {sortTypes} from '../../const';
 import {sorting} from '../../store/offers-data/offers-data';
 import {getActiveSortType} from '../../store/offers-data/selectors';
 

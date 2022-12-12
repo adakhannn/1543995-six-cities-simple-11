@@ -1,16 +1,19 @@
-import {FormEvent, useRef} from 'react';
-import {useAppDispatch} from '../../hooks';
-import {AuthData} from '../../types/auth-data';
 import {loginAction} from '../../store/api-actions';
+import {useAppSelector, useAppDispatch} from '../../hooks';
 import MainLogo from '../../components/main-logo/main-logo';
+import {getActiveCity} from '../../store/offers-data/selectors';
+import {redirectToRoute} from '../../store/action';
+import {useRef, FormEvent} from 'react';
+import {AppRoute} from '../../const';
+import {AuthData} from '../../types/auth-data';
 
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const location = useAppSelector(getActiveCity);
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
     if (loginRef.current !== null && passwordRef.current !== null) {
       onSubmit({
         login: loginRef.current.value,
@@ -67,8 +70,15 @@ function Login(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
+              <a
+                className="locations__item-link"
+                href="#"
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  dispatch(redirectToRoute(AppRoute.Root));
+                }}
+              >
+                <span>{location.name}</span>
               </a>
             </div>
           </section>

@@ -1,7 +1,8 @@
+import {fetchReviews, sendReview} from '../api-actions';
 import {createSlice} from '@reduxjs/toolkit';
+import {sortReviewDate} from '../../utils';
 import {NameSpace} from '../../const';
 import {ReviewsData} from '../../types/state';
-import {fetchReviews, sendReview} from '../api-actions';
 
 const initialState: ReviewsData = {
   reviews: [],
@@ -14,10 +15,10 @@ export const reviewsData = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchReviews.fulfilled, (state, action) => {
-        state.reviews = action.payload;
+        state.reviews = action.payload.sort(sortReviewDate);
       })
       .addCase(sendReview.fulfilled, (state, action) => {
-        state.reviews = action.payload;
+        state.reviews = action.payload.sort(sortReviewDate);
       });
   }
 });

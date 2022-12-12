@@ -1,7 +1,7 @@
-import Review from '../review/review';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {useEffect} from 'react';
 import {fetchReviews} from '../../store/api-actions';
+import {useAppSelector, useAppDispatch} from '../../hooks';
+import Review from '../review/review';
+import {useEffect} from 'react';
 import {getReviews} from '../../store/reviews-data/selectors';
 
 type ReviewListProp = {

@@ -1,18 +1,13 @@
-import {useRef, useEffect} from 'react';
-import {Icon, Marker} from 'leaflet';
 import {useAppSelector} from '../../hooks';
-import {PinIcon} from '../../const';
+import {currentCustomIcon, defaultCustomIcon} from '../../const';
+import {useRef, useEffect} from 'react';
 import useMap from '../../hooks/use-map/use-map';
-import {getActiveCity, getNearbyOffers} from '../../store/offers-data/selectors';
+import {getActiveCity, getActiveOffer, getNearbyOffers} from '../../store/offers-data/selectors';
+import {Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const defaultCustomIcon = new Icon({
-  iconUrl: PinIcon.Default,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
-
 function NearbyMap(): JSX.Element {
+  const currentOffer = useAppSelector(getActiveOffer);
   const offers = useAppSelector(getNearbyOffers);
   const city = useAppSelector(getActiveCity);
   const mapRef = useRef(null);
@@ -29,7 +24,11 @@ function NearbyMap(): JSX.Element {
           });
           markers.push(marker);
           marker
-            .setIcon(defaultCustomIcon)
+            .setIcon(
+              currentOffer && offer.id === currentOffer.id
+                ? currentCustomIcon
+                : defaultCustomIcon
+            )
             .addTo(map);
         });
       }

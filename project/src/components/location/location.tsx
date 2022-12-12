@@ -1,8 +1,8 @@
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useAppSelector, useAppDispatch} from '../../hooks';
 import classNames from 'classnames';
-import {City} from '../../types/offer';
 import {filtering} from '../../store/offers-data/offers-data';
 import {getActiveCity} from '../../store/offers-data/selectors';
+import {City} from '../../types/offer';
 
 type locationProps = {
   city: City;

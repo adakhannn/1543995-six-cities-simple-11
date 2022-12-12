@@ -1,7 +1,7 @@
+import {rootReducer} from './root-reduser';
 import {configureStore} from '@reduxjs/toolkit';
 import {createAPI} from '../services/api';
 import {redirect} from './middlewares/redirect';
-import {rootReducer} from './root-reduser';
 
 export const api = createAPI();
 
