@@ -16,14 +16,13 @@ export type OffersData = {
   activeCity: City;
   activeSortType: string;
   offers: Offers;
-  filteredOffers: Offers;
-  sortedOffers: Offers;
   nearbyOffers: Offers;
   activeOffer: Offer | null;
 };
 
 export type ReviewsData = {
   reviews: Reviews;
+  sendStatus: string;
 };
 
 export type OffersProcess = {

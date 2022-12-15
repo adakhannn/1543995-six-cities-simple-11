@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import {useAppDispatch} from '../../hooks';
 import {hoveringOffer} from '../../store/offers-process/offers-process';
 import {Offer} from '../../types/offer';
+import {OneStarPercent} from '../../const';
 
 type CardProps = {
   offer: Offer;
@@ -41,7 +42,7 @@ function Card(props: CardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${(100 / 5) * Math.round(offer.rating)}%`}}></span>
+            <span style={{width: `${OneStarPercent * Math.round(offer.rating)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

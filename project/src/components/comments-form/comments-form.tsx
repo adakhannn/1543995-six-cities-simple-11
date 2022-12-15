@@ -1,17 +1,20 @@
 import {sendReview} from '../../store/api-actions';
-import {ChangeEvent, FormEvent, useState} from 'react';
+import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {ReviewData} from '../../types/review-data';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getActiveOffer} from '../../store/offers-data/selectors';
+import {getSendStatus} from '../../store/reviews-data/selectors';
+import {ReviewRestrictions, SendReviewStatus} from '../../const';
 
 function CommentsForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const currentOffer = useAppSelector(getActiveOffer);
+  const sendStatus = useAppSelector(getSendStatus);
   const [formData, setFormData] = useState({
     review: '',
     rating: 0,
   });
-  const validationStatus = formData.rating > 0 && formData.review.length > 50 && formData.review.length < 300 ;
+  const validationStatus = formData.rating > 0 && formData.review.length > ReviewRestrictions.MinSymbols && formData.review.length < ReviewRestrictions.MaxSymbols ;
   const handleChange = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
@@ -28,11 +31,15 @@ function CommentsForm(): JSX.Element {
   };
   const onSubmit = (reviewData: ReviewData) => {
     dispatch(sendReview(reviewData));
-    setFormData({
-      review: '',
-      rating: 0,
-    });
   };
+  useEffect(() => {
+    if (sendStatus === SendReviewStatus.Success) {
+      setFormData({
+        review: '',
+        rating: 0,
+      });
+    }
+  }, [sendStatus]);
   return (
     <form
       className="reviews__form form"
@@ -50,6 +57,7 @@ function CommentsForm(): JSX.Element {
           type="radio"
           onChange={handleChange}
           checked={Number(formData.rating) === 5}
+          disabled={sendStatus === SendReviewStatus.Pending}
         />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -64,6 +72,7 @@ function CommentsForm(): JSX.Element {
           type="radio"
           onChange={handleChange}
           checked={Number(formData.rating) === 4}
+          disabled={sendStatus === SendReviewStatus.Pending}
         />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width="37" height="33">
@@ -78,6 +87,7 @@ function CommentsForm(): JSX.Element {
           type="radio"
           onChange={handleChange}
           checked={Number(formData.rating) === 3}
+          disabled={sendStatus === SendReviewStatus.Pending}
         />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
           <svg className="form__star-image" width="37" height="33">
@@ -92,6 +102,7 @@ function CommentsForm(): JSX.Element {
           type="radio"
           onChange={handleChange}
           checked={Number(formData.rating) === 2}
+          disabled={sendStatus === SendReviewStatus.Pending}
         />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
           <svg className="form__star-image" width="37" height="33">
@@ -106,6 +117,7 @@ function CommentsForm(): JSX.Element {
           type="radio"
           onChange={handleChange}
           checked={Number(formData.rating) === 1}
+          disabled={sendStatus === SendReviewStatus.Pending}
         />
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
           <svg className="form__star-image" width="37" height="33">
@@ -120,6 +132,7 @@ function CommentsForm(): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.review}
         onChange={handleChange}
+        disabled={sendStatus === SendReviewStatus.Pending}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -129,7 +142,7 @@ function CommentsForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!validationStatus}
+          disabled={!validationStatus || sendStatus === SendReviewStatus.Pending}
         >
           Submit
         </button>
