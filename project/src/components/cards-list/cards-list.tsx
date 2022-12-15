@@ -1,9 +1,11 @@
-import {useAppSelector} from '../../hooks';
-import {getSortedOffers} from '../../store/offers-data/selectors';
 import Card from '../../components/card/card';
+import {Offers} from '../../types/offer';
 
-function CardsList(): JSX.Element {
-  const offers = useAppSelector(getSortedOffers);
+type CardsListProps = {
+  offers: Offers;
+};
+
+function CardsList({ offers }: CardsListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers ? offers.map((offer) => <Card key={offer.id} offer={offer}/>) : ''}

@@ -3,12 +3,16 @@ import {currentCustomIcon, defaultCustomIcon} from '../../const';
 import {Marker} from 'leaflet';
 import {useRef, useEffect} from 'react';
 import useMap from '../../hooks/use-map/use-map';
-import {getActiveCity, getSortedOffers} from '../../store/offers-data/selectors';
+import {getActiveCity} from '../../store/offers-data/selectors';
 import {getHoveredOffer} from '../../store/offers-process/selectors';
 import 'leaflet/dist/leaflet.css';
+import {Offers} from '../../types/offer';
 
-function Map(): JSX.Element {
-  const offers = useAppSelector(getSortedOffers);
+type MapProps = {
+  offers: Offers;
+};
+
+function Map({ offers }: MapProps): JSX.Element {
   const city = useAppSelector(getActiveCity);
   const hoveredOffer = useAppSelector(getHoveredOffer);
   const mapRef = useRef(null);

@@ -1,8 +1,12 @@
 import {useAppSelector} from '../../hooks';
-import {getActiveCity, getSortedOffers} from '../../store/offers-data/selectors';
+import {getActiveCity} from '../../store/offers-data/selectors';
+import {Offers} from '../../types/offer';
 
-function Title(): JSX.Element {
-  const offers = useAppSelector(getSortedOffers);
+type TitleProps = {
+  offers: Offers;
+};
+
+function Title({ offers }: TitleProps): JSX.Element {
   const activeCity = useAppSelector(getActiveCity);
   return (
     <b className="places__found">{offers ? offers.length : ''} places to stay in {activeCity.name}</b>

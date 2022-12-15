@@ -7,11 +7,17 @@ import Map from '../../components/map/map';
 import Header from '../../components/header/header';
 import Sorter from '../../components/sorter/sorter';
 import Title from '../../components/title/title';
-import {getOffers, getOffersDataLoadingStatus} from '../../store/offers-data/selectors';
+import {
+  getActiveCity,
+  getActiveSortType,
+  getOffers,
+  getOffersDataLoadingStatus
+} from '../../store/offers-data/selectors';
 import NoPlaces from '../../components/no-places/no-places';
 import {getAuthCheckedStatus} from '../../store/user-process/selectors';
 import Loading from '../../components/loading/loading';
 import classNames from 'classnames';
+import {useMemo} from 'react';
 
 store.dispatch(fetchOffers());
 
@@ -19,6 +25,29 @@ function Main(): JSX.Element {
   const offers = useAppSelector(getOffers);
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
+  const location = useAppSelector(getActiveCity);
+  const activeSortType = useAppSelector(getActiveSortType);
+  const filteredOffers = useMemo(
+    () => offers.filter(({ city }) => city.name === location.name),
+    [offers, location]
+  );
+  const sortedOffers = useMemo(() => {
+    if (activeSortType === 'Popular') {
+      return filteredOffers;
+    }
+    return [...filteredOffers].sort((a, b) => {
+      switch (activeSortType) {
+        case 'Price: high to low':
+          return b.price - a.price;
+        case 'Price: low to high':
+          return a.price - b.price;
+        case 'Top rated first':
+          return b.rating - a.rating;
+        default:
+          return 0;
+      }
+    });
+  }, [filteredOffers, activeSortType]);
   if (!isAuthChecked || isOffersDataLoading) {
     return (
       <Loading />
@@ -40,13 +69,19 @@ function Main(): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <Title />
+                <Title
+                  offers={sortedOffers}
+                />
                 <Sorter />
-                <CardsList />
+                <CardsList
+                  offers={sortedOffers}
+                />
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map />
+                  <Map
+                    offers={sortedOffers}
+                  />
                 </section>
               </div>
             </div>

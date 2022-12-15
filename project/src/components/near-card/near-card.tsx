@@ -1,6 +1,6 @@
 import {Offer} from '../../types/offer';
-import {fetchNearbyOffers, fetchOffer, fetchReviews} from '../../store/api-actions';
-import {useAppDispatch} from '../../hooks';
+import {OneStarPercent} from '../../const';
+import {Link} from 'react-router-dom';
 
 type NearCardProps = {
   offer: Offer;
@@ -8,7 +8,6 @@ type NearCardProps = {
 
 function NearCard(props:NearCardProps): JSX.Element {
   const offer = props.offer;
-  const dispatch = useAppDispatch();
   return (
     <article className="near-places__card place-card">
       <div className="near-places__image-wrapper place-card__image-wrapper">
@@ -25,21 +24,14 @@ function NearCard(props:NearCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${(100 / 5) * Math.round(offer.rating)}%`}}></span>
+            <span style={{width: `${OneStarPercent * Math.round(offer.rating)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a
-            onClick={(evt) => {
-              evt.preventDefault();
-              dispatch(fetchOffer(offer.id));
-              dispatch(fetchNearbyOffers(offer.id));
-              dispatch(fetchReviews(offer.id));
-            }}
-          >
+          <Link to={`/offer/${offer.id}`}>
             {offer.title}
-          </a>
+          </Link>
         </h2>
         <p className="place-card__type">{offer.type === 'room' ? 'Private Room' : offer.type[0].toUpperCase() + offer.type.slice(1)}</p>
       </div>

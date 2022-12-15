@@ -10,7 +10,7 @@ import CommentsForm from '../../components/comments-form/comments-form';
 import Reviews from '../../components/reviews/reviews';
 import NearbyMap from '../../components/nearby-map/nearby-map';
 import Loading from '../../components/loading/loading';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, OneStarPercent, PicturesNumber} from '../../const';
 import Error from '../error/error';
 
 function Property(): JSX.Element {
@@ -21,7 +21,7 @@ function Property(): JSX.Element {
     dispatch(fetchOffer(Number(offerId)));
     dispatch(fetchNearbyOffers(Number(offerId)));
     dispatch(fetchReviews(Number(offerId)));
-  }, []);
+  }, [offerId]);
   const currentOffer = useAppSelector(getActiveOffer);
   const isError = useAppSelector(getErrorStatus);
   const isOfferDataLoading = useAppSelector(getOfferDataLoadingStatus);
@@ -40,7 +40,7 @@ function Property(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {currentOffer.images.slice(0, 6).map((image) => (
+              {currentOffer.images.slice(PicturesNumber.MinPictures, PicturesNumber.MaxPictures).map((image) => (
                 <div className="property__image-wrapper" key={image}>
                   <img className="property__image" src={image} alt="Photo studio" />
                 </div>
@@ -61,7 +61,7 @@ function Property(): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${(100 / 5) * currentOffer.rating}%`}}></span>
+                  <span style={{width: `${OneStarPercent * currentOffer.rating}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{currentOffer.rating}</span>
@@ -78,7 +78,7 @@ function Property(): JSX.Element {
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{currentOffer.maxAdults}</b>
+                <b className="property__price-value">&euro;{currentOffer.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
