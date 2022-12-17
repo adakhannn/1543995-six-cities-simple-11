@@ -119,6 +119,8 @@ export enum NameSpace {
   Reviews = 'REVIEWS',
 }
 
+export const HousingType = ['apartment', 'room', 'house', 'hotel'] as const;
+
 export const OneStarPercent = 20;
 
 export const BACKEND_URL = 'https://11.react.pages.academy/six-cities-simple';
