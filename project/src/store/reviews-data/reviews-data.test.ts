@@ -36,7 +36,7 @@ describe('Reducer: offersData', () => {
 
   it('should set sendStatus to "PENDING"', () => {
     expect(
-      reviewsData.reducer(initialState, { type: sendReview.pending.type})
+      reviewsData.reducer(initialState, {type: sendReview.pending.type})
     ).toEqual({...initialState, sendStatus: SendReviewStatus.Pending});
   });
 

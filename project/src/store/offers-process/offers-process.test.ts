@@ -15,13 +15,13 @@ describe('Reducer: offersProcess', () => {
 
   it('without additional parameters should return initial state', () => {
     expect(
-      offersProcess.reducer(undefined, { type: 'UNKNOWN_ACTION' })
+      offersProcess.reducer(undefined, {type: 'UNKNOWN_ACTION'})
     ).toEqual(initialState);
   });
 
   it('should set new sorting', () => {
     expect(
-      offersProcess.reducer(initialState, hoveringOffer({ hoveredOffer: hoverOffer }))
-    ).toEqual({ ...initialState, hoveredOffer: hoverOffer });
+      offersProcess.reducer(initialState, hoveringOffer({hoveredOffer: hoverOffer}))
+    ).toEqual({...initialState, hoveredOffer: hoverOffer});
   });
 });

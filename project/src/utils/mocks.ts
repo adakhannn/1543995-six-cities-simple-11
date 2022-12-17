@@ -1,7 +1,7 @@
 import { datatype, internet, name, system } from 'faker';
 import { cities, HousingType } from '../const';
 import {City, Offer} from '../types/offer';
-import {Reviews} from '../types/review';
+import {Reviews, SendingReview} from '../types/review';
 import {UserData} from '../types/user-data';
 
 export const makeFakeOffer = (): Offer => ({
@@ -65,4 +65,9 @@ export const makeFakeReviewsIncoming = (): Reviews =>
     rating: datatype.number(5),
     user: makeFakeUserData(),
   }));
+
+export const makeFakeReviewOutgoing = (): SendingReview => ({
+  comment: datatype.string(),
+  rating: datatype.number(5),
+});
 

@@ -6,7 +6,7 @@ import {filtering, offersData, sorting} from './offers-data';
 import {fetchNearbyOffers, fetchOffer, fetchOffers} from '../api-actions';
 
 const offer = makeFakeOffer();
-const offers = Array.from({ length: datatype.number(10) }, () =>
+const offers = Array.from({length: datatype.number(10)}, () =>
   makeFakeOffer()
 );
 const city = makeFakeCity();
